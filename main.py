@@ -4,31 +4,42 @@ from pathlib import Path
 
 
 def main():
-    # Prompt for the path to the input MP4 file
-    video_path = input('Input the path to your video file: ').strip('"')
-    # Prompt for the  text to overlay on the GIF
-    input_text = input('Input the text to overlay on the GIF: ').strip('"')
+    while True:
+        # Prompt for the path to the input MP4 file
+        video_path = input('Input the path to your video file: ').strip('"')
+        # Prompt for the  text to overlay on the GIF
+        input_text = input('Input the text to overlay on the GIF: ').strip('"')
 
-    output_folder = Path(video_path).parent/"Output"
-    # Create the output folder if it doesn't exist
-    output_folder.mkdir(exist_ok=True)
-    # The output GIF file name is the same as the input video path but with a .gif extension
-    output_gif_path = output_folder / Path(video_path).with_suffix('.gif').name
-    # The base name for the output frames
-    frame_base_name = 'frame_'
-    # The prefix for the output frames
-    output_frame_prefix = 'output'
+        output_folder = Path(video_path).parent/"Output"
+        # Create the output folder if it doesn't exist
+        output_folder.mkdir(exist_ok=True)
+        # The output GIF file name is the same as the input video path but with a .gif extension
+        output_gif_path = output_folder / Path(video_path).with_suffix('.gif').name
+        # The base name for the output frames
+        frame_base_name = 'frame_'
+        # The prefix for the output frames
+        output_frame_prefix = 'output'
 
-    # Font settings for ImageMagick
-    font_path = "C:/Users/Thomas/AppData/Local/Microsoft/Windows/Fonts/CourierPrime-Bold.ttf"
-    font_size = '34'
-    font_weight = 'bold'
-    text_color = '#00ff9b'
+        # Font settings for ImageMagick
+        font_path = "C:/Users/Thomas/AppData/Local/Microsoft/Windows/Fonts/CourierPrime-Bold.ttf"
+        font_size = '34'
+        font_weight = 'bold'
+        text_color = '#00ff9b'
 
-    video_frames = convert_video_to_frames(frame_base_name, video_path)
-    overlay_text_on_video_frames(video_frames, output_frame_prefix, font_path, font_size, font_weight, text_color, input_text)
-    create_gif_from_frames(frame_base_name, output_frame_prefix, output_gif_path)
-    cleanup_frames(video_frames, output_frame_prefix)
+        video_frames = convert_video_to_frames(frame_base_name, video_path)
+        overlay_text_on_video_frames(video_frames, output_frame_prefix, font_path, font_size, font_weight, text_color, input_text)
+        create_gif_from_frames(frame_base_name, output_frame_prefix, output_gif_path)
+        cleanup_frames(video_frames, output_frame_prefix)
+
+        # Ask the user if they want to process another GIF
+        while True:
+            another = input('Do you want to process another GIF? (y/n): ').lower()
+            if another == 'y':
+                break
+            elif another == 'n':
+                return
+            else:
+                print("Invalid input. Please enter 'y' or 'n'.")
 
 
 def convert_video_to_frames(frame_base_name, video_path):
