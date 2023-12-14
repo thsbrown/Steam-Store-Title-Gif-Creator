@@ -7,7 +7,7 @@ def main():
     # Prompt for the path to the input MP4 file
     video_path = input('Input the path to your video file (no quotes): ')
     # Prompt for the  text to overlay on the GIF
-    input_text = input('Input the text to overlay on the GIF: ')
+    input_text = input('Input the text to overlay on the GIF (no quotes): ')
 
     # The output GIF file name is the same as the input video path but with a .gif extension
     output_gif_path = Path(video_path).with_suffix('.gif')
