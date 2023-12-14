@@ -4,11 +4,24 @@ from pathlib import Path
 
 
 def main():
+    # Initialize the font settings
+    font_path, font_size, font_weight, font_color = accept_font_settings()
     while True:
         # Prompt for the path to the input MP4 file
         video_path = input('Input the path to your video file: ').strip('"')
         # Prompt for the  text to overlay on the GIF
         input_text = input('Input the text to overlay on the GIF: ').strip('"')
+
+        # Prompt to change the font settings
+        while True:
+            override_font_settings = input('Would you like to change any font settings? (y/n): ').lower()
+            if override_font_settings == 'y':
+                font_path, font_size, font_weight, font_color = accept_font_settings()
+                break
+            elif override_font_settings == 'n':
+                break
+            else:
+                print("Invalid input. Please enter 'y' or 'n'.")
 
         output_folder = Path(video_path).parent/"Output"
         # Create the output folder if it doesn't exist
@@ -20,14 +33,8 @@ def main():
         # The prefix for the output frames
         output_frame_prefix = 'output'
 
-        # Font settings for ImageMagick
-        font_path = "C:/Users/Thomas/AppData/Local/Microsoft/Windows/Fonts/CourierPrime-Bold.ttf"
-        font_size = '34'
-        font_weight = 'bold'
-        text_color = '#00ff9b'
-
         video_frames = convert_video_to_frames(frame_base_name, video_path)
-        overlay_text_on_video_frames(video_frames, output_frame_prefix, font_path, font_size, font_weight, text_color, input_text)
+        overlay_text_on_video_frames(video_frames, output_frame_prefix, font_path, font_size, font_weight, font_color, input_text)
         create_gif_from_frames(frame_base_name, output_frame_prefix, output_gif_path)
         cleanup_frames(video_frames, output_frame_prefix)
 
@@ -51,18 +58,26 @@ def convert_video_to_frames(frame_base_name, video_path):
 
 
 def overlay_text_on_video_frames(video_frames, output_frame_prefix,
-                                 font_path, font_size, font_weight, text_color, input_text):
+                                 font_path, font_size, font_weight, font_color, input_text):
     # Apply localized text to each frame with centered alignment
     for frame in video_frames:
         output_frame = f"{output_frame_prefix}_{frame.name}"
         subprocess.run(
             ['magick', frame.name, '-font', font_path, '-pointsize', font_size, '-weight', font_weight, '-fill',
-             text_color, '-gravity', 'center', '-draw', f"text 0,0 '{input_text}'", output_frame])
+             font_color, '-gravity', 'center', '-draw', f"text 0,0 '{input_text}'", output_frame])
 
 
 def create_gif_from_frames(frame_base_name, output_frame_prefix, output_gif):
     # Reassemble the frames into a GIF
     subprocess.run(['magick', '-delay', '10', '-loop', '0', f"{output_frame_prefix}_{frame_base_name}*.png", output_gif])
+
+
+def accept_font_settings():
+    font_path = input('Input the path to your font file: ').strip('"')
+    font_size = input('Input the font size: ').strip('"')
+    font_weight = input('Input the font weight: ').strip('"')
+    font_color = input('Input the font color: ').strip('"')
+    return font_path, font_size, font_weight, font_color
 
 
 def cleanup_frames(video_frames, output_frame_prefix):
