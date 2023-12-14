@@ -46,9 +46,9 @@ def overlay_text_on_video_frames(video_frames, output_frame_prefix,
              text_color, '-gravity', 'center', '-draw', f"text 0,0 '{input_text}'", output_frame])
 
 
-def create_gif_from_frames(frame_base_name, output_gif):
+def create_gif_from_frames(frame_base_name, output_frame_prefix, output_gif):
     # Reassemble the frames into a GIF
-    subprocess.run(['magick', '-delay', '10', '-loop', '0', f"localized_{frame_base_name}*.png", output_gif])
+    subprocess.run(['magick', '-delay', '10', '-loop', '0', f"{output_frame_prefix}_{frame_base_name}*.png", output_gif])
 
 
 def cleanup_frames(video_frames, output_frame_prefix):
