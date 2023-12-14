@@ -5,9 +5,9 @@ from pathlib import Path
 
 def main():
     # Prompt for the path to the input MP4 file
-    video_path = input('Input the path to your video file (no quotes): ')
+    video_path = input('Input the path to your video file: ').strip('"')
     # Prompt for the  text to overlay on the GIF
-    input_text = input('Input the text to overlay on the GIF (no quotes): ')
+    input_text = input('Input the text to overlay on the GIF: ').strip('"')
 
     output_folder = Path(video_path).parent/"Output"
     # Create the output folder if it doesn't exist
