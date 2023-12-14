@@ -17,13 +17,13 @@ def main():
     output_frame_prefix = 'output'
 
     # Font settings for ImageMagick
-    font = 'C:\\Users\\Thomas\\AppData\\Local\\Microsoft\\Windows\\Fonts\\CourierPrime-Bold.ttf'
+    font_path = "C:/Users/Thomas/AppData/Local/Microsoft/Windows/Fonts/CourierPrime-Bold.ttf"
     font_size = '34'
     font_weight = 'bold'
     text_color = '#00ff9b'
 
     video_frames = convert_video_to_frames(frame_base_name, video_path)
-    overlay_text_on_video_frames(video_frames, output_frame_prefix, font, font_size, font_weight, text_color, input_text)
+    overlay_text_on_video_frames(video_frames, output_frame_prefix, font_path, font_size, font_weight, text_color, input_text)
     create_gif_from_frames(frame_base_name, output_frame_prefix, output_gif_path)
     cleanup_frames(video_frames, output_frame_prefix)
 
