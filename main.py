@@ -9,8 +9,11 @@ def main():
     # Prompt for the  text to overlay on the GIF
     input_text = input('Input the text to overlay on the GIF (no quotes): ')
 
+    output_folder = Path(video_path).parent/"Output"
+    # Create the output folder if it doesn't exist
+    output_folder.mkdir(exist_ok=True)
     # The output GIF file name is the same as the input video path but with a .gif extension
-    output_gif_path = Path(video_path).with_suffix('.gif')
+    output_gif_path = output_folder / Path(video_path).with_suffix('.gif').name
     # The base name for the output frames
     frame_base_name = 'frame_'
     # The prefix for the output frames
