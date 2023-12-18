@@ -75,7 +75,7 @@ def create_gif_from_frames(frame_base_name, output_frame_prefix, output_gif):
 
 def optimize_gif(output_gif):
     # Use ImageMagick fuzz argument to optimize the GIF https://stackoverflow.com/questions/24819460/best-way-to-compress-animated-gifs-using-imagemagick-without-using-gifsicle#:~:text=After%20you%20generate%20a%20large%20gif%2C%20you%20can%20make%20it%20smaller.&text=The%20biggest%20space%20savings%20comes,to%20a%20few%20hundred%20kb.&text=The%20%2Dfuzz%20flag%20really%20did%20it%20for%20me%2C%20as%20well.
-    subprocess.run(['magick', 'mogrify', '-fuzz', '7%', '-layers', 'optimize', output_gif])
+    subprocess.run(['magick', 'mogrify', '-fuzz', '7%', '+dither', '-layers', 'optimize', output_gif])
 
 
 def accept_font_settings():
