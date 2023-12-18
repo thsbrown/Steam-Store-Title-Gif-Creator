@@ -51,7 +51,7 @@ def main():
 
 def convert_video_to_frames(frame_base_name, video_path):
     # Extract frames from the MP4 file
-    subprocess.run(['ffmpeg', '-i', video_path, '-vf', 'fps=10', f"{frame_base_name}%04d.png"])
+    subprocess.run(['ffmpeg', '-i', video_path, '-vf', 'fps=30', f"{frame_base_name}%04d.png"])
 
     # Get the list of extracted frames
     return list(Path('.').glob(f"{frame_base_name}*.png"))
@@ -69,7 +69,8 @@ def overlay_text_on_video_frames(video_frames, output_frame_prefix,
 
 def create_gif_from_frames(frame_base_name, output_frame_prefix, output_gif):
     # Reassemble the frames into a GIF
-    subprocess.run(['magick', '-delay', '10', '-loop', '0', f"{output_frame_prefix}_{frame_base_name}*.png", output_gif])
+    subprocess.run(['magick', '-delay', '3', '-loop', '0', f"{output_frame_prefix}_{frame_base_name}*.png",
+                    '-colors', '32', output_gif])
 
 
 def accept_font_settings():
