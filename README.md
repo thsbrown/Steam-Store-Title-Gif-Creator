@@ -12,6 +12,6 @@ This is a simple script that allows you to create a gif from a video file with t
 - [ ] font weight doesn't work when specifying font path.
 - [ ] allow specifying custom fps, right now defaults to 30.
 - [ ] allow specifying custom optimization percentage level (fuzz defaults to 7%).
-- [  allow custom output path.
+- [ ] allow custom output path.
 - [ ] allow for custom text position, (always defaults to center vertically and horizontally).
 - [ ] allow for specifying csv file with video input and text to overlay. ("video.mp4", "text" \n "video2.mp4", "text2")
